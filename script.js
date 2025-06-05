@@ -1,11 +1,15 @@
-const {spawn}=require('child_process')
+const {fork}=require('child_process')
 
-const high=spawn('node',['aju.js',"ajsal","jaseel"])
+const child=fork('aju.js')
 
-high.stdout.on('data',(data)=>{
-    console.log(`output:${data}`)
+
+child.send({task:"started",data:[1,2,3]})
+
+
+child.on('message',(msg)=>{
+    console.log('parent recieved:',msg)
 })
 
-high.stderr.on('error',(err)=>{
-    console.log(`error:${err}`)
+child.on('exit',(code)=>{
+    console.log("child exited with code",code)
 })

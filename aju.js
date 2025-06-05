@@ -1,2 +1,5 @@
-console.log("first arguemet:",process.argv[2])
-console.log("second arguemet:",process.argv[3])
+process.on('message',(msg)=>{
+    console.log("child recieved",msg)
+    const resuld=msg.data.map(n=>n*2)
+    process.send({resuld})
+})
